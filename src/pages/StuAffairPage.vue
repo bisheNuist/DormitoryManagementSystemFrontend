@@ -13,6 +13,7 @@
       </el-select>
         <el-button @click="getAllData">查询</el-button>
         <el-button @click="add">新增</el-button>
+        <el-button @click="reset">重置</el-button>
       </div>
 
       <el-table
@@ -61,6 +62,7 @@
             <el-button @click="success(scope.row)" type="text" size="small">批准</el-button>
             <el-button @click="fail(scope.row)" type="text" size="small">不批准</el-button>
             <el-button @click="deleteFair(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="complete(scope.row)" type="text" size="small">完成</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -144,6 +146,15 @@ export default {
         }
       })
     },
+    complete(data){
+      request.post("/studentAffairs/complete",{
+        ...data
+      }).then(res => {
+        if(res.data.code === 0){
+          this.getAllData()
+        }
+      })
+    },
     fail(data){
       request.post("/studentAffairs/approvalFail",{
         ...data
@@ -151,6 +162,10 @@ export default {
         if(res.data.code === 0){
           this.getAllData()        }
       })
+    },
+    reset(){
+      this.searchForm = {};
+      this.getAllData();
     },
     deleteFair(data){
       request.post("/studentAffairs/delete",{

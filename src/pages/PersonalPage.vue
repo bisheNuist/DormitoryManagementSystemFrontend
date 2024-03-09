@@ -81,8 +81,11 @@
         <el-form-item label="学院">
           <el-input v-model="personalForm.userDepartment" style="width: 200px"></el-input>
         </el-form-item>
+        <el-form-item label="宿舍地址">
+          <el-input v-model="personalForm.dormAddress" style="width: 200px"></el-input>
+        </el-form-item>
         <el-form-item label="宿舍号">
-          <el-input v-model="personalForm.userDormitoryId" style="width: 200px"></el-input>
+          <el-input v-model="personalForm.dormNum" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label="床位">
           <el-input v-model="personalForm.userBed" style="width: 200px"></el-input>
@@ -90,7 +93,6 @@
         <el-form-item label="性别">
           <el-select v-model="personalForm.gender" placeholder="">
             <el-option v-for="city in [{name:'男',value:0},{name:'女',value:1}]" :label="city.name" :value="city.value" :key="city.value"></el-option>
-
           </el-select>
         </el-form-item>
         <el-form-item label="手机号">
@@ -151,7 +153,7 @@ export default {
           this.getUserInfo();
           this.cancel()
         }else {
-          this.$message.error("修改失败")
+          this.$message.error(res.data.message)
         }
       })
     },

@@ -25,6 +25,11 @@
             width="180">
         </el-table-column>
         <el-table-column
+            prop="phone"
+            label="手机号"
+            width="180">
+        </el-table-column>
+        <el-table-column
             prop="userDepartment"
             label="学院"
             width="180">
@@ -76,11 +81,17 @@
           <el-form-item label="学院">
             <el-input v-model="stuForm.userDepartment" style="width: 200px"></el-input>
           </el-form-item>
+          <el-form-item label="姓名">
+            <el-input v-model="stuForm.userName" style="width: 200px"></el-input>
+          </el-form-item>
           <el-form-item label="宿舍地址">
             <el-input v-model="stuForm.dormAddress" style="width: 200px"></el-input>
           </el-form-item>
           <el-form-item label="宿舍号">
             <el-input v-model="stuForm.dormNum" style="width: 200px"></el-input>
+          </el-form-item>
+          <el-form-item label="学号">
+            <el-input v-model="stuForm.userNum" style="width: 200px"></el-input>
           </el-form-item>
           <el-form-item label="床位">
             <el-input v-model="stuForm.userBed" style="width: 200px"></el-input>
@@ -98,7 +109,7 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="onSubmit">更新</el-button>
+          <el-button type="primary" @click="onSubmit">确定</el-button>
           <el-button @click="cancel">取消</el-button>
        </span>
       </el-dialog>
@@ -166,16 +177,6 @@ export default {
     update(data){
       this.stuForm = data;
       this.visible = true;
-      // todo
-      request.post("/user/saveDetail",{
-        ...this.stuForm
-      }).then(res => {
-        if(res.data.code === 0){
-          this.stuData = res.data.data;
-        }else {
-          this.$message.error("查询失败")
-        }
-      })
     },
     onSubmit(){
       if(!this.stuForm.id){
@@ -186,18 +187,18 @@ export default {
             this.getAllData();
             this.cancel()
           }else {
-            this.$message.error("新增失败")
+            this.$message.error(res.data.message)
           }
         })
       }else {
-        request.post("/user/update",{
+        request.post("/user/saveDetail",{
           ...this.stuForm
         }).then(res => {
           if(res.data.code === 0){
             this.getAllData();
             this.cancel()
           }else {
-            this.$message.error("更新失败")
+            this.$message.error(res.data.message)
           }
         })
       }
