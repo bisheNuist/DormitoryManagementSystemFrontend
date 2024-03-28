@@ -1,4 +1,4 @@
-# campus-mutual-aid-frontend
+# DormitoryManagementSystem
 
 ## Project setup
 ```
